@@ -1,12 +1,8 @@
 variable "environment" {}
-variable "cpu" {}
-variable "memory" {}
-variable "container_image" {}
+variable "vpc_id" {}
+variable "subnet_ids" {
+  type = list(string)
+}
+variable "task_execution_role" {}
+variable "image_url" {}
 variable "container_port" {}
-variable "execution_role_arn" {}
-variable "subnets" {
-  type = list(string)
-}
-variable "security_groups" {
-  type = list(string)
-}
