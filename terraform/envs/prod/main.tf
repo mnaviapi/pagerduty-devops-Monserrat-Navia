@@ -10,16 +10,43 @@ module "vpc" {
   environment           = "prod"
 }
 
+resource "aws_security_group" "rds_sg" {
+  name        = "prod-rds-sg"
+  description = "Allow inbound MySQL"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "Allow MySQL"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # O restringe a tu IP
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "prod-rds-sg"
+  }
+}
+
+
 module "rds" {
   source              = "../../modules/rds"
   environment         = "prod"
-  vpc_id              = module.vpc.vpc_id
   subnet_ids          = [module.vpc.public_subnet_1_id]
-  instance_class      = "db.t3.micro"
-  allocated_storage   = 20
   db_name             = "prod_db"
   db_user             = "admin"
-  db_password         = "changeme123" # idealmente reemplazar por Secrets Manager
+  db_password         = "changeme123"
+  instance_class      = "db.t3.micro"
+  engine              = "mysql"
+  engine_version      = "8.0"
+  security_group_id   = aws_security_group.rds_sg.id
 }
 
 module "ecs_iam_role" {
