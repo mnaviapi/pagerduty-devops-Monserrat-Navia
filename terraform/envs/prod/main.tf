@@ -9,3 +9,30 @@ module "vpc" {
   az_1                  = "us-east-1a"
   environment           = "prod"
 }
+
+module "rds" {
+  source              = "../../modules/rds"
+  environment         = "prod"
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = [module.vpc.public_subnet_1_id]
+  instance_class      = "db.t3.micro"
+  allocated_storage   = 20
+  db_name             = "prod_db"
+  db_user             = "admin"
+  db_password         = "changeme123" # idealmente reemplazar por Secrets Manager
+}
+
+module "ecs_iam_role" {
+  source      = "../../modules/iam"
+  environment = "prod"
+}
+
+module "ecs" {
+  source              = "../../modules/ecs"
+  environment         = "prod"
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = [module.vpc.public_subnet_1_id]
+  task_execution_role = module.ecs_iam_role.role_arn
+  image_url           = "nginx:latest"
+  container_port      = 80
+}
