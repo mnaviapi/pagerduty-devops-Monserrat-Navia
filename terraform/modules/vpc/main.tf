@@ -1,22 +1,18 @@
-resource "aws_vpc" "main" {
-  cidr_block           = var.vpc_cidr
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-
-  tags = {
-    Name        = "csgtest-${var.environment}-vpc"
-    environment = var.environment
-  }
+provider "aws" {
+  region = "us-east-1"
 }
 
-resource "aws_subnet" "public_1" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_1_cidr
-  availability_zone       = var.az_1
-  map_public_ip_on_launch = true
+module "vpc" {
+  source                = "../../modules/vpc"
+  vpc_cidr              = "10.0.0.0/16"
+  public_subnet_1_cidr  = "10.0.1.0/24"
+  az_1                  = "us-east-1a"
+  environment           = "dev"
+}
 
-  tags = {
-    Name        = "csgtest-${var.environment}-public-1"
-    environment = var.environment
-  }
+module "ecs" {
+  source              = "../../modules/ecs"
+  environment         = "dev"
+  container_image     = "nginx"
+  execution_role_arn  = "arn:aws:iam::123456789012:role/ecsTaskExecutionRole" # ← reemplaza con el tuyo
 }
