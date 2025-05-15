@@ -42,7 +42,7 @@ module "rds" {
   subnet_ids          = [module.vpc.public_subnet_1_id]
   db_name             = "prod_db"
   db_user             = "admin"
-  db_password         = "changeme123"
+  db_password         = jsondecode(data.aws_secretsmanager_secret_version.rds_password.secret_string)["db_password"]
   instance_class      = "db.t3.micro"
   engine              = "mysql"
   engine_version      = "8.0"
