@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ${{ github.ref_name == 'develop' && 'terraform/envs/dev' || format('terraform/envs/{0}', github.ref_name) }}
+        working-directory: terraform/envs/${{ github.ref_name }}
 
     steps:
       - name: Checkout code
