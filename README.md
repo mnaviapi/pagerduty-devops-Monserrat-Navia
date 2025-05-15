@@ -74,5 +74,4 @@ environment = "dev" o "prod"
 Licencia: Este proyecto está disponible bajo la licencia MIT.
 
 
-
 <!-- Trigger CI/CD in develop -->
