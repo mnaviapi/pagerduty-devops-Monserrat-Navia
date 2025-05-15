@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/envs/${{ github.ref_name }}
+        working-directory: terraform/envs/develop
 
     steps:
       - name: Checkout code
