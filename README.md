@@ -73,4 +73,28 @@ environment = "dev" o "prod"
 
 Licencia: Este proyecto está disponible bajo la licencia MIT.
 
+---
+
+# Alert Builder
+
+This is a prototype application that allows you to manually create alert events in structured JSON format, as if they were incidents or technical issues.
+
+## Features
+
+- Build alerts manually via API
+- Output in structured JSON
+- Ready for integration with AWS ECS
+
+## Endpoints (planned)
+
+- `GET /alerts`
+- `POST /alerts`
+
+## Stack
+
+- Node.js (Express)
+- Terraform (for IaC deployment)
+- Docker
+- AWS ECS Fargate
+
 
