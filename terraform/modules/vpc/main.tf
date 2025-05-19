@@ -1,18 +1,46 @@
-provider "aws" {
-  region = "us-east-1"
+resource "aws_vpc" "this" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = "vpc-${var.environment}"
+  }
 }
 
-module "vpc" {
-  source                = "../../modules/vpc"
-  vpc_cidr              = "10.0.0.0/16"
-  public_subnet_1_cidr  = "10.0.1.0/24"
-  az_1                  = "us-east-1a"
-  environment           = "dev"
+resource "aws_internet_gateway" "this" {
+  vpc_id = aws_vpc.this.id
+
+  tags = {
+    Name = "igw-${var.environment}"
+  }
 }
 
-module "ecs" {
-  source              = "../../modules/ecs"
-  environment         = "dev"
-  container_image     = "nginx"
-  execution_role_arn  = "arn:aws:iam::123456789012:role/ecsTaskExecutionRole" # ← reemplaza con el tuyo
+resource "aws_subnet" "public_1" {
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = var.public_subnet_1_cidr
+  availability_zone       = var.az_1
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "subnet-public-a-${var.environment}"
+  }
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.this.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.this.id
+  }
+
+  tags = {
+    Name = "rt-public-${var.environment}"
+  }
+}
+
+resource "aws_route_table_association" "public_1" {
+  subnet_id      = aws_subnet.public_1.id
+  route_table_id = aws_route_table.public.id
 }
