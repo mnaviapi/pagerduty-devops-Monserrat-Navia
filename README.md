@@ -1,100 +1,149 @@
-pagerduty-devops-Monserrat-Navia
+# 🚨 Alert Builder – Prueba Técnica DevOps (PagerDuty)
 
-Este proyecto fue desarrollado como parte de una prueba técnica para el equipo de innovación de PagerDuty. Tiene como objetivo desplegar una infraestructura moderna, segura y escalable usando herramientas DevOps como Terraform, AWS y GitHub Actions.
-
----
-
-Tecnologías utilizadas
-
-- AWS: ECS (Fargate), RDS, Secrets Manager, IAM, VPC
-- Terraform: Código modular reutilizable por ambiente
-- GitHub Actions: Pipeline automatizado para despliegues
-- Aplicación: Página simple HTML tipo “Hello, PagerDuty”
-- Git: Flujo de ramas para separar ambientes
+Este proyecto fue desarrollado por **Monserrat Navia** como parte de una prueba técnica para el equipo de innovación de **PagerDuty**. Su objetivo es diseñar, contenerizar y desplegar una aplicación prototipo en AWS Fargate, utilizando herramientas modernas de DevOps como Terraform, Docker, GitHub Actions y servicios de infraestructura de AWS.
 
 ---
 
-Objetivos del proyecto
+## 🧰 Tecnologías Utilizadas
 
-1) Definir una arquitectura desacoplada para despliegue de contenedores
-2) Usar infraestructura como código que sea fácil de replicar en distintos entornos (`dev` y `prod`)
-3) Automatizar el pipeline de despliegue según la rama
-4) Almacenar secretos de forma segura
-5) Aplicar buenas prácticas como tagging, uso de módulos y separación de responsabilidades
+* **AWS**
 
----
-
-Flujo de trabajo
-
-- Cambios en la rama `develop` → despliegue al entorno de pruebas
-- Cambios en la rama `main` → despliegue al entorno de producción
-
-El pipeline incluye validación de Terraform, chequeo de formato, plan de cambios y aplicación automática.
+  * ECS (Fargate)
+  * ECR
+  * VPC
+  * IAM
+  * Security Groups
+* **Terraform** – Infraestructura como código, modular y reutilizable
+* **Docker** – Contenerización de la aplicación `alert-builder`
+* **GitHub Actions** *(planeado)* – CI/CD pipeline automatizado
+* **Node.js + Express** – Aplicación backend para creación de alertas
 
 ---
 
-Estructura del repositorio
+## 🎯 Objetivos del Proyecto
+
+* Construir una arquitectura desacoplada y segura para ejecutar contenedores en la nube
+* Desplegar una aplicación en AWS ECS Fargate utilizando imágenes de Amazon ECR
+* Gestionar infraestructura con Terraform, aplicando buenas prácticas modulares
+* Asegurar separación entre ambientes (dev / prod)
+* Automatizar despliegues con CI/CD
+* Exponer la aplicación mediante una IP pública y puerto definido (3000)
+
+---
+
+## ⚙️ Flujo de Trabajo (GitOps CI/CD Planificado)
+
+| Rama Git  | Entorno destino    |
+| --------- | ------------------ |
+| `develop` | Entorno de pruebas |
+| `main`    | Producción         |
+
+Cada commit ejecutará un pipeline que:
+
+* Valida sintaxis y estilo con `terraform fmt` y `terraform validate`
+* Ejecuta `terraform plan` y `terraform apply` en el entorno correspondiente
+* Construye y sube la imagen a Amazon ECR
+* Actualiza el servicio en ECS Fargate
+
+---
+
+## 📂 Estructura del Repositorio
 
 ```
 terraform/
 ├── modules/
-│ ├── vpc/
-│ ├── ecs/
-│ ├── rds/
-│ ├── iam/
-│ └── security/
+│   ├── vpc/
+│   ├── ecs/
+│   ├── rds/               # Opcional
+│   ├── iam/
+│   └── security/
 ├── envs/
-│ ├── dev/
-│ └── prod/
+│   ├── dev/
+│   └── prod/
 
-app/
-.github/
-diagrams/
+app/                       # Contiene la app Express "Alert Builder"
+.github/                   # Workflows de CI/CD (pipeline)
+diagrams/                  # Diagramas de arquitectura
 README.md
-
 ```
 
 ---
 
-Diagrama de arquitectura
+## 📐 Arquitectura de Solución
 
-El esquema completo de la infraestructura se encuentra en la carpeta `/diagrams`.
+El diagrama completo está en la carpeta [`/diagrams`](./diagrams/alert-builder.drawio).
 
----
+**Componentes clave:**
 
-Tags
-
-Todos los recursos están etiquetados con:
-name = "csgtest"
-environment = "dev" o "prod"
-
-
----
-
-Licencia: Este proyecto está disponible bajo la licencia MIT.
+* VPC personalizada con subredes públicas
+* ECS Cluster con servicio en modo FARGATE
+* Definición de tarea (`task definition`) con contenedor basado en imagen ECR
+* Security Group que permite acceso al puerto TCP `3000`
+* IP pública asignada automáticamente a la ENI de la tarea
 
 ---
 
-# Alert Builder
+## 🔔 Aplicación Alert Builder – Detalles Técnicos
 
-This is a prototype application that allows you to manually create alert events in structured JSON format, as if they were incidents or technical issues.
+Aplicación backend sencilla construida en **Node.js (Express)**, pensada para permitir la creación de alertas manuales con estructura JSON.
 
-## Features
+### Características
 
-- Build alerts manually via API
-- Output in structured JSON
-- Ready for integration with AWS ECS
+* Crear alertas simuladas vía API
+* Retornar estructuras JSON como eventos técnicos
+* Preparada para escalar horizontalmente
 
-## Endpoints (planned)
+### Endpoints futuros (planeados)
 
-- `GET /alerts`
-- `POST /alerts`
+```
+GET  /alerts        # Obtener listado de alertas creadas
+POST /alerts        # Crear nueva alerta manual
+```
 
-## Stack
+---
 
-- Node.js (Express)
-- Terraform (for IaC deployment)
-- Docker
-- AWS ECS Fargate
+## 🚀 Resultado del Despliegue
 
+La aplicación fue desplegada correctamente en AWS ECS Fargate y puede ser accedida desde una IP pública. Resultado esperado:
 
+```bash
+🟢 Alert Builder está corriendo 🚀
+```
+
+**URL de acceso (ejemplo real):**
+[http://44.211.89.106:3000](http://44.211.89.106:3000)
+
+---
+
+## 🏷 Etiquetado de Recursos
+
+Todos los recursos Terraform están etiquetados según ambiente y propósito para trazabilidad:
+
+```hcl
+name        = "alert-builder"
+environment = "dev"  # o "prod"
+managed-by  = "terraform"
+```
+
+---
+
+## 🔐 Seguridad
+
+* La aplicación corre dentro de una VPC privada
+* Security Groups permiten tráfico únicamente al puerto 3000
+* IAM roles limitados al principio de menor privilegio
+
+---
+
+## 📜 Licencia
+
+MIT License – Este proyecto está disponible para uso libre con fines educativos y técnicos.
+
+---
+
+## 🙋‍♀️ Autora
+
+**Monserrat Navia**
+DevOps & Cloud Engineering
+[LinkedIn → monserratnavia](https://www.linkedin.com/in/monserratnavia)
+Instagram técnico → `@monsenav.ai`
