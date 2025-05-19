@@ -1,163 +1,156 @@
-# 🚨 Alert Builder – Prueba Técnica DevOps (PagerDuty)
+# 🚨 Alert Builder – DevOps Technical Challenge (PagerDuty)
 
-Este proyecto fue desarrollado por **Monserrat Navia** como parte de una prueba técnica para el equipo de innovación de **PagerDuty**. Su objetivo es diseñar, contenerizar y desplegar una aplicación prototipo en AWS Fargate, utilizando herramientas modernas de DevOps como Terraform, Docker, GitHub Actions y servicios de infraestructura de AWS.
-
----
-
-## 🧰 Tecnologías Utilizadas
-
-* **AWS**
-
-  * ECS (Fargate)
-  * ECR
-  * VPC
-  * IAM
-  * Security Groups
-* **Terraform** – Infraestructura como código, modular y reutilizable
-* **Docker** – Contenerización de la aplicación `alert-builder`
-* **GitHub Actions** *(planeado)* – CI/CD pipeline automatizado
-* **Node.js + Express** – Aplicación backend para creación de alertas
+This project was developed by **Monserrat Navia** as part of a technical assessment for the **PagerDuty Innovation team**.  
+Its goal is to design, containerize, and deploy a prototype application on **AWS Fargate**, using modern DevOps tools such as **Terraform**, **Docker**, **GitHub Actions**, and AWS infrastructure services.
 
 ---
 
-## 🎯 Objetivos del Proyecto
+## 🧰 Technologies Used
 
-* Construir una arquitectura desacoplada y segura para ejecutar contenedores en la nube
-* Desplegar una aplicación en AWS ECS Fargate utilizando imágenes de Amazon ECR
-* Gestionar infraestructura con Terraform, aplicando buenas prácticas modulares
-* Asegurar separación entre ambientes (dev / prod)
-* Automatizar despliegues con CI/CD
-* Exponer la aplicación mediante una IP pública y puerto definido (3000)
+### AWS
+- **ECS (Fargate)** – Container orchestration
+- **ECR** – Container image registry
+- **VPC** – Custom networking
+- **IAM** – Access management
+- **Security Groups** – Network-level security
 
----
-
-## ⚙️ Flujo de Trabajo (GitOps CI/CD Planificado)
-
-| Rama Git  | Entorno destino    |
-| --------- | ------------------ |
-| `develop` | Entorno de pruebas |
-| `main`    | Producción         |
-
-Cada commit ejecutará un pipeline que:
-
-* Valida sintaxis y estilo con `terraform fmt` y `terraform validate`
-* Ejecuta `terraform plan` y `terraform apply` en el entorno correspondiente
-* Construye y sube la imagen a Amazon ECR
-* Actualiza el servicio en ECS Fargate
+### Tools
+- **Terraform** – Infrastructure as code (modular and reusable)
+- **Docker** – Containerization of the `alert-builder` app
+- **GitHub Actions** *(planned)* – Automated CI/CD pipeline
+- **Node.js + Express** – Backend application for creating alerts
 
 ---
 
-## 📂 Estructura del Repositorio
+## 🎯 Project Objectives
 
-```
+- Build a decoupled and secure architecture to run containers in the cloud  
+- Deploy the application to AWS ECS Fargate using Amazon ECR images  
+- Manage infrastructure with Terraform, following modular best practices  
+- Ensure environment separation (dev / prod)  
+- Automate deployments with CI/CD (pipeline planned)  
+- Expose the application through a public IP and port 3000  
+
+---
+
+## ⚙️ GitOps Workflow (Planned CI/CD)
+
+| Git Branch | Target Environment |
+|------------|--------------------|
+| `develop`  | Staging environment |
+| `main`     | Production |
+
+Each commit will trigger a pipeline that:
+
+- Validates syntax and formatting via `terraform fmt` and `terraform validate`  
+- Executes `terraform plan` and `terraform apply` for the corresponding environment  
+- Builds and pushes the Docker image to Amazon ECR  
+- Updates the ECS Fargate service with the new task definition  
+
+---
+
+## 📂 Repository Structure
+
 terraform/
 ├── modules/
-│   ├── vpc/
-│   ├── ecs/
-│   ├── rds/               # Opcional
-│   ├── iam/
-│   └── security/
+│ ├── vpc/
+│ ├── ecs/
+│ ├── rds/ # Optional
+│ ├── iam/
+│ └── security/
 ├── envs/
-│   ├── dev/
-│   └── prod/
+│ ├── dev/
+│ └── prod/
 
-app/                       # Contiene la app Express "Alert Builder"
-.github/                   # Workflows de CI/CD (pipeline)
-diagrams/                  # Diagramas de arquitectura
+app/ # Express app (Alert Builder)
+.github/ # CI/CD GitHub workflows
+diagrams/ # Architecture diagrams
 README.md
-```
+
+yaml
+Copiar
+Editar
 
 ---
 
-## 📐 Arquitectura de Solución
+## 📐 Solution Architecture
 
-El diagrama completo:
+📄 Full diagram: 
 
-[alert-builder.drawio.pdf](https://github.com/user-attachments/files/20280071/alert-builder.drawio.pdf)
+[alert-builder.drawio.pdf](https://github.com/user-attachments/files/20280408/alert-builder.drawio.pdf)
 
 
-**Componentes clave:**
+**Key components:**
 
-* VPC personalizada con subredes públicas
-* ECS Cluster con servicio en modo FARGATE
-* Definición de tarea (`task definition`) con contenedor basado en imagen ECR
-* Security Group que permite acceso al puerto TCP `3000`
-* IP pública asignada automáticamente a la ENI de la tarea
-
----
-
-## 🔔 Aplicación Alert Builder – Detalles Técnicos
-
-Aplicación backend sencilla construida en **Node.js (Express)**, pensada para permitir la creación de alertas manuales con estructura JSON.
-
-### Características
-
-* Crear alertas simuladas vía API
-* Retornar estructuras JSON como eventos técnicos
-* Preparada para escalar horizontalmente
-
-### Endpoints futuros (planeados)
-
-```
-GET  /alerts        # Obtener listado de alertas creadas
-POST /alerts        # Crear nueva alerta manual
-```
+- Custom VPC with public subnets  
+- ECS Cluster with service running in **Fargate** mode  
+- Task definition based on a Docker image stored in ECR  
+- Security Group allowing inbound traffic on TCP port 3000  
+- Public IP automatically assigned to the task's ENI  
 
 ---
 
-## 🚀 Resultado del Despliegue
+## 🔔 Alert Builder App – Technical Details
 
-La aplicación fue desplegada correctamente en AWS ECS Fargate y puede ser accedida desde una IP pública. Resultado esperado:
+A simple backend app built with **Node.js (Express)** that allows creating mock alerts in JSON format.
 
-```bash
-🟢 Alert Builder está corriendo 🚀
-```
+### Features:
+- Create simulated alerts via API  
+- Return technical JSON-formatted payloads  
+- Designed to scale horizontally  
 
-**URL de acceso (ejemplo real):**
-[http://44.211.89.106:3000](http://44.211.89.106:3000)
+### Future Endpoints *(planned)*:
+- `GET  /alerts` – Retrieve list of created alerts  
+- `POST /alerts` – Create a new manual alert  
 
 ---
 
-## 🏷 Etiquetado de Recursos
+## 🚀 Deployment Result
 
-Todos los recursos Terraform están etiquetados según ambiente y propósito para trazabilidad:
+The application was successfully deployed on AWS ECS Fargate and is accessible via a public IP.
 
-```hcl
+✅ Expected output:  
+🟢 **Alert Builder is running**
+
+**Example URL:**  
+http://44.211.89.106:3000
+
+---
+
+## 🏷 Resource Tagging
+
+All Terraform-managed resources are tagged for traceability based on environment and purpose:
+
+hcl
 name        = "alert-builder"
-environment = "dev"  # o "prod"
+environment = "dev"   # or "prod"
 managed-by  = "terraform"
-```
 
----
+🔐 Security
+Application runs inside a private VPC
 
-## 🔐 Seguridad
+Security Groups only allow inbound traffic on port 3000
 
-* La aplicación corre dentro de una VPC privada
-* Security Groups permiten tráfico únicamente al puerto 3000
-* IAM roles limitados al principio de menor privilegio
+IAM roles follow the principle of least privilege
 
-## 🔎 Observabilidad y Logs
+🔎 Observability and Logging
+The ECS task definition integrates with CloudWatch Logs, enabling real-time traceability of the alert-builder app.
 
-La definición de tarea incluye integración nativa con CloudWatch Logs, permitiendo trazabilidad completa de la app `alert-builder`.
+Log group: /ecs/
+Example stream: ecs/alert-builder/<task-id>
+Expected boot message:
 
-- **Grupo de logs:** `/ecs/`
-- **Stream de ejemplo:** `ecs/alert-builder/<task-id>`
-- **Mensaje de arranque esperado:**  
-  `Servidor escuchando en http://0.0.0.0:3000`
+nginx
+Copiar
+Editar
+Server listening on http://0.0.0.0:3000
+You can audit the application logs via the AWS Console or AWS CLI.
 
-Esto permite visualizar y auditar en tiempo real el estado de la aplicación directamente desde la consola AWS o usando la CLI:
+📜 License
+MIT License – Free to use for educational and technical purposes.
 
----
-
-## 📜 Licencia
-
-MIT License – Este proyecto está disponible para uso libre con fines educativos y técnicos.
-
----
-
-## Autora
-
-**Monserrat Navia**
+🙋‍♀️ Author
+Monserrat Navia
 DevOps & Cloud Engineering
-[LinkedIn → monserratnavia](https://www.linkedin.com/in/monserratnavia)
-Instagram técnico → `@monsenav.ai`
+🔗 LinkedIn – Monserrat Navia
+📸 Instagram – @monsenav.ai
