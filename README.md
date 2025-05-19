@@ -53,14 +53,14 @@ Each commit will trigger a pipeline that:
 
 terraform/
 ├── modules/
-│ ├── vpc/
-│ ├── ecs/
-│ ├── rds/ # Optional
-│ ├── iam/
-│ └── security/
+│   ├── vpc/
+│   ├── ecs/
+│   ├── rds/               # Opcional
+│   ├── iam/
+│   └── security/
 ├── envs/
-│ ├── dev/
-│ └── prod/
+│   ├── dev/
+│   └── prod/
 
 app/ # Express app (Alert Builder)
 .github/ # CI/CD GitHub workflows
