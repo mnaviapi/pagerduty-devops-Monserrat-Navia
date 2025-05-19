@@ -49,27 +49,24 @@ Each commit will trigger a pipeline that:
 
 ---
 
+
 ## 📂 Repository Structure
 
 terraform/
 ├── modules/
-│   ├── vpc/
-│   ├── ecs/
-│   ├── rds/               # Opcional
-│   ├── iam/
-│   └── security/
+│ ├── vpc/
+│ ├── ecs/
+│ ├── rds/ # Optional
+│ ├── iam/
+│ └── security/
 ├── envs/
-│   ├── dev/
-│   └── prod/
+│ ├── dev/
+│ └── prod/
 
 app/ # Express app (Alert Builder)
 .github/ # CI/CD GitHub workflows
 diagrams/ # Architecture diagrams
 README.md
-
-yaml
-Copiar
-Editar
 
 ---
 
