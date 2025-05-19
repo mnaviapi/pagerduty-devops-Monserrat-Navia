@@ -56,7 +56,7 @@ Each commit will trigger a pipeline that:
 pagerduty-devops-Monserrat-Navia/
 ├── app/                        # App dummy o nginx
 │   ├── Dockerfile
-│   └── index.js                # (si aplica)
+│   └── index.js                
 ├── terraform/
 │   ├── modules/
 │   │   ├── ecs/
@@ -69,9 +69,9 @@ pagerduty-devops-Monserrat-Navia/
 │           ├── outputs.tf
 │           └── terraform.tfvars
 ├── .github/workflows/ci-cd.yml
-├── README.md                   # Súper importante
-├── infra.drawio.png            # (Opcional) Diagrama de arquitectura
-└── infra-status.md             # (Opcional) Lista de tareas completadas/faltantes
+├── README.md                   
+├── infra.drawio.png          
+
 ```
 
 
