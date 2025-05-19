@@ -4,16 +4,16 @@ variable "vpc_cidr" {
 }
 
 variable "public_subnet_1_cidr" {
-  description = "CIDR block for the first public subnet"
+  description = "CIDR block for the public subnet"
   type        = string
 }
 
 variable "az_1" {
-  description = "Availability Zone for the first public subnet"
+  description = "Availability zone"
   type        = string
 }
 
 variable "environment" {
-  description = "Environment name (e.g. dev, prod)"
+  description = "Environment name"
   type        = string
 }
