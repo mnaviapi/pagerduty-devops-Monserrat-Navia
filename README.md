@@ -71,7 +71,10 @@ README.md
 
 ## 📐 Arquitectura de Solución
 
-El diagrama completo está en la carpeta [`/diagrams`](./diagrams/alert-builder.drawio).
+El diagrama completo:
+
+[alert-builder.drawio.pdf](https://github.com/user-attachments/files/20280071/alert-builder.drawio.pdf)
+
 
 **Componentes clave:**
 
