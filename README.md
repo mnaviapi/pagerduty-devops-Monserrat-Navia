@@ -152,7 +152,7 @@ MIT License – Este proyecto está disponible para uso libre con fines educativ
 
 ---
 
-## 🙋‍♀️ Autora
+## Autora
 
 **Monserrat Navia**
 DevOps & Cloud Engineering
