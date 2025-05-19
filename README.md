@@ -81,7 +81,8 @@ pagerduty-devops-Monserrat-Navia/
 
 📄 Full diagram: 
 
-[alert-builder.drawio.pdf](https://github.com/user-attachments/files/20280408/alert-builder.drawio.pdf)
+[alert-builder-arch.drawio.pdf](https://github.com/user-attachments/files/20301920/alert-builder-arch.drawio.pdf)
+
 
 
 **Key components:**
