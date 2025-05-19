@@ -52,21 +52,28 @@ Each commit will trigger a pipeline that:
 
 ## 📂 Repository Structure
 
-terraform/
-├── modules/
-│ ├── vpc/
-│ ├── ecs/
-│ ├── rds/ # Optional
-│ ├── iam/
-│ └── security/
-├── envs/
-│ ├── dev/
-│ └── prod/
-
-app/ # Express app (Alert Builder)
-.github/ # CI/CD GitHub workflows
-diagrams/ # Architecture diagrams
-README.md
+pagerduty-devops-Monserrat-Navia/
+├── app/                        ← app dummy o nginx
+│   ├── Dockerfile
+│   └── index.js (si aplica)
+│
+├── terraform/
+│   ├── modules/
+│   │   ├── ecs/
+│   │   ├── iam/
+│   │   └── vpc/
+│   │
+│   └── envs/
+│       ├── develop/
+│           ├── main.tf
+│           ├── variables.tf
+│           ├── outputs.tf
+│           └── terraform.tfvars
+│
+├── .github/workflows/ci-cd.yml
+├── README.md                   ← súper importante
+├── infra.drawio.png            ← si alcanzas, opcional pero pro
+└── infra-status.md             ← (opcional) lista de tareas completadas/faltantes
 
 ---
 
