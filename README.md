@@ -133,6 +133,17 @@ managed-by  = "terraform"
 * Security Groups permiten tráfico únicamente al puerto 3000
 * IAM roles limitados al principio de menor privilegio
 
+## 🔎 Observabilidad y Logs
+
+La definición de tarea incluye integración nativa con CloudWatch Logs, permitiendo trazabilidad completa de la app `alert-builder`.
+
+- **Grupo de logs:** `/ecs/`
+- **Stream de ejemplo:** `ecs/alert-builder/<task-id>`
+- **Mensaje de arranque esperado:**  
+  `Servidor escuchando en http://0.0.0.0:3000`
+
+Esto permite visualizar y auditar en tiempo real el estado de la aplicación directamente desde la consola AWS o usando la CLI:
+
 ---
 
 ## 📜 Licencia
